@@ -65,7 +65,7 @@ const AddFiled = () => {
         .then((res) => {
           console.log("Data inserted");
           console.log(res);
-          alert("Hello! I am an alert box!!");
+          customAlert.current.success("Product Successfully added");
           setCheckImage("");
           formik.resetForm();
         })
@@ -221,7 +221,6 @@ const AddFiled = () => {
             <TextField
               id="stock"
               className="stock"
-              label="stock"
               variant="outlined"
               error
               label={formik.errors.stock}
@@ -246,8 +245,7 @@ const AddFiled = () => {
             Add
           </Button>
         </p.part>
-        <Alert ref={customAlert}  />
-
+        <Alert ref={customAlert} />
       </p.AddMainDiv>
     </>
   );

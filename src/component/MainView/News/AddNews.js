@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import * as c from "./News.styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@mui/material/TextField";
@@ -10,6 +10,9 @@ import FormControl from "@material-ui/core/FormControl";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+
+import IMGcroper from "../../cropIMG/IMGcropper";
+import Alert from "../../alertCOMP/alert";
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -49,6 +52,8 @@ const BootstrapInput = withStyles((theme: Theme) =>
 )(InputBase);
 
 const AddNews = () => {
+  const customAlert = useRef();
+
   const formik = useFormik({
     initialValues: {
       image: "",
@@ -69,9 +74,9 @@ const AddNews = () => {
   });
 
   const [pic, setPic] = useState(null);
-  const fileSelectedHandler = (event) => {
-    setPic(event.target.files[0]);
-  };
+  // const fileSelectedHandler = (event) => {
+  //   setPic(event.target.files[0]);
+  // };
 
   const [checkImage, setCheckImage] = useState("");
   const sendToDatabase = (values) => {
@@ -87,7 +92,7 @@ const AddNews = () => {
         .then((res) => {
           console.log("Data inserted");
           console.log(res);
-          alert("Hello! I am an alert box!!");
+          customAlert.current.success("News Successfully added");
           setCheckImage("");
 
           formik.resetForm();
@@ -113,7 +118,6 @@ const AddNews = () => {
               <TextField
                 id="title"
                 className="title"
-                label="Title"
                 variant="outlined"
                 error
                 label={formik.errors.title}
@@ -131,15 +135,9 @@ const AddNews = () => {
           </c.part>
           <c.part>
             <p>Image</p>
-            <div style={{ marginRight: "18rem" }}>
-              <input
-                onChange={fileSelectedHandler}
-                multiple
-                type="file"
-                required
-              />
-              {""}
-              <span style={{ color: "red" }}> {checkImage}</span>
+            <div style={{ marginRight: "13.7rem" }}>
+            <IMGcroper setPic={setPic} />
+            <span style={{ color: "red" }}> {checkImage}</span>
             </div>
           </c.part>
           <c.part>
@@ -148,7 +146,6 @@ const AddNews = () => {
               <TextField
                 id="description"
                 className="Description"
-                label="Description"
                 multiline
                 rows={5}
                 variant="outlined"
@@ -178,6 +175,8 @@ const AddNews = () => {
             </Button>
           </c.part>
         </FormControl>
+        <Alert ref={customAlert} />
+
       </c.AddCategoryMainDiv>
     </>
   );
