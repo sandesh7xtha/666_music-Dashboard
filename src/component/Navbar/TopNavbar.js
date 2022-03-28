@@ -18,8 +18,8 @@ const TopNavbar = () => {
       <n.MenuItem>
         {navitem}
         <n.UserName>
-          <p>PRAMILA kHADKA</p>
-          <span>ADMIN PROFILE</span>
+          <p>ADMIN </p>
+          {/* <span>ADMIN PROFILE</span> */}
         </n.UserName>
       </n.MenuItem>
     </>

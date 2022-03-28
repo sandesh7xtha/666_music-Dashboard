@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import * as c from "./Advertisement.styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@mui/material/TextField";
@@ -7,7 +7,10 @@ import FormControl from "@material-ui/core/FormControl";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import IMGcroper from "../../cropIMG/IMGcropper";
+import Alert from "../../alertCOMP/alert";
 const AdvertisementAdd = () => {
+  const customAlert = useRef();
 
   const formik = useFormik({
     initialValues: {
@@ -29,9 +32,9 @@ const AdvertisementAdd = () => {
   });
 
   const [pic, setPic] = useState(null);
-  const fileSelectedHandler = (event) => {
-    setPic(event.target.files[0]);
-  };
+  // const fileSelectedHandler = (event) => {
+  //   setPic(event.target.files[0]);
+  // };
 
   const [checkImage, setCheckImage] = useState("");
   const sendToDatabase = (values) => {
@@ -47,7 +50,7 @@ const AdvertisementAdd = () => {
         .then((res) => {
           console.log("Data inserted");
           console.log(res);
-          alert("Hello! I am an alert box!!");
+          customAlert.current.success("Advertisement Successfully added");
           setCheckImage("");
 
           formik.resetForm();
@@ -75,7 +78,6 @@ const AdvertisementAdd = () => {
               <TextField
                 id="title"
                 className="title"
-                label="Title"
                 variant="outlined"
                 error
                 label={formik.errors.title}
@@ -93,15 +95,9 @@ const AdvertisementAdd = () => {
           </c.part>
           <c.part>
             <p>Image</p>
-            <div style={{ marginRight: "18rem" }}>
-              <input
-                onChange={fileSelectedHandler}
-                multiple
-                type="file"
-                required
-              />
-              {""}
-              <span style={{ color: "red" }}> {checkImage}</span>
+            <div style={{ marginRight: "13.7rem" }}>
+            <IMGcroper setPic={setPic} />
+            <span style={{ color: "red" }}> {checkImage}</span>
             </div>
           </c.part>
           <c.part>
@@ -140,6 +136,7 @@ const AdvertisementAdd = () => {
             </Button>
           </c.part>
         </FormControl>
+        <Alert ref={customAlert} />
 
       </c.AddCategoryMainDiv>
     </>
