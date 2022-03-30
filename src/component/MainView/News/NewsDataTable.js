@@ -17,8 +17,7 @@ import EditIcon from "../../EditComponent/EditIcon";
 import DeleteIcon from "../../DeleteComponent/DeleteIcon";
 import SuccessAlert from "../../SuccessAlertComponent/SuccessAlert";
 import axios from "axios";
-
-
+import EditProduct from "./EditProductDetail/EditNewsPopUp";
 
 const useStyle = makeStyles((theme) => ({
   tableRow: {
@@ -34,62 +33,47 @@ const useStyle = makeStyles((theme) => ({
 
 export default function NewsDataTable() {
   const classes = useStyle();
-  const refreshPage = ()=>{
+  const refreshPage = () => {
     window.location.reload();
- }
+  };
   const [news, setNews] = useState([]);
 
-  const getNewsFromDB = ()=>{
+  const getNewsFromDB = () => {
     axios
-    .get("http://localhost:4000/news/")
-    .then((res) => {
-      console.log(res.data.data);
-      setNews(res.data.data);
-      $("#NewsTable").DataTable();
-     
-    })
-    .catch((err) => {
-      console.log(err);
-      console.log("data insert fail");
-      
-    });
+      .get("http://localhost:4000/news/")
+      .then((res) => {
+        console.log(res.data.data);
+        setNews(res.data.data);
+        $("#NewsTable").DataTable();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
-}
+  const deleteProduct = (newsID) => {
+    axios
+      .delete("http://localhost:4000/news/DeleteProduct/" + newsID)
+      .then((res) => {
+        console.log("deleted");
+        getNewsFromDB();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
-const deleteProduct =(newsID) =>{
-  axios
-  .delete("http://localhost:4000/news/DeleteProduct/"+newsID)
-  .then((res) => {
-    console.log("deleted");
-    getNewsFromDB();
-
-   
-  })
-  .catch((err) => {
-    console.log(err);
-    console.log("data insert fail");
-    
-  });  
- 
-}
-
-  
   useEffect(() => {
     getNewsFromDB();
-    
-   
   }, []);
-
-
 
   useEffect(() => {
     $(document).ready(function () {
       // $("#example2").DataTable();
     });
   });
-
-
-
 
   return (
     <TableContainer>
@@ -136,16 +120,20 @@ const deleteProduct =(newsID) =>{
                 {row.new_id}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
-              <img className="img" src={row.image} style={{  maxWidth: "8rem" ,}}/>
-              </TableCell>              
+                <img
+                  className="img"
+                  src={row.image}
+                  style={{ maxWidth: "8rem" }}
+                />
+              </TableCell>
               <TableCell align="left" className={classes.tableRow}>
                 {row.title}
               </TableCell>
 
               <TableCell align="right">
                 <ViewIcon />
-                <EditIcon />
-                <DeleteIcon  deleteProduct={deleteProduct} id={row.new_id} />
+                <EditProduct data={row} />
+                <DeleteIcon deleteProduct={deleteProduct} id={row.new_id} />
               </TableCell>
             </TableRow>
           ))}

@@ -15,8 +15,8 @@ import $ from "jquery";
 import ViewIcon from "../../ViewComponent/ViewIcon";
 import EditIcon from "../../EditComponent/EditIcon";
 import DeleteIcon from "../../DeleteComponent/DeleteIcon";
+import EditProduct from "./EditProductDetail/EditProductPopUp";
 import axios from "axios";
-
 
 const useStyle = makeStyles((theme) => ({
   tableRow: {
@@ -33,54 +33,46 @@ const useStyle = makeStyles((theme) => ({
 export default function DataTable() {
   const classes = useStyle();
   const [shopProduct, setShopProduct] = useState([]);
-  const getShopProductFroMDB = ()=>{
+  const getShopProductFroMDB = () => {
     axios
-    .get("http://localhost:4000/shopping/")
-    .then((res) => {
-      console.log(res.data.data);
-      setShopProduct(res.data.data);
-     
-      $("#shop").DataTable();
-     
-    })
-    .catch((err) => {
-      console.log(err);
-      console.log("data insert fail");
-      
-    });
+      .get("http://localhost:4000/shopping/")
+      .then((res) => {
+        console.log(res.data.data);
+        setShopProduct(res.data.data);
 
-}
+        $("#shop").DataTable();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
-const deleteProduct =(shopProductID) =>{
-  axios
-  .delete("http://localhost:4000/shopping/DeleteProduct/"+shopProductID)
-  .then((res) => {
-    console.log("deleted");
-    getShopProductFroMDB();
-
-   
-  })
-  .catch((err) => {
-    console.log(err);
-    console.log("data insert fail");
-    
-  });  
- 
-}
+  const deleteProduct = (shopProductID) => {
+    axios
+      .delete("http://localhost:4000/shopping/DeleteProduct/" + shopProductID)
+      .then((res) => {
+        console.log("deleted");
+        getShopProductFroMDB();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
   useEffect(() => {
-    getShopProductFroMDB();   
+    getShopProductFroMDB();
   }, []);
 
-useEffect(() => {
-  $(document).ready(function () {
-    // $("#example3").DataTable();
+  useEffect(() => {
+    $(document).ready(function () {
+      // $("#example3").DataTable();
+    });
   });
-});
 
   return (
     <TableContainer>
-      
       <Table
         id="shop"
         sx={{ minWidth: 300 }}
@@ -96,7 +88,7 @@ useEffect(() => {
             </TableCell>
             <TableCell className={classes.tableRow} align="left">
               Image
-            </TableCell>            
+            </TableCell>
             <TableCell className={classes.tableRow} align="left">
               Title
             </TableCell>
@@ -107,7 +99,6 @@ useEffect(() => {
           </TableRow>
         </TableHead>
         <TableBody stripedRows>
-          
           {shopProduct.map((row, index) => (
             <TableRow
               key={index}
@@ -120,15 +111,18 @@ useEffect(() => {
               //   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="left" className={classes.tableRow}>
-                {index+1}
-           
+                {index + 1}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
                 {/* {index} */}
                 {row.sp_id}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
-              <img className="img" src={row.image} style={{  maxWidth: "8rem" ,}}/>
+                <img
+                  className="img"
+                  src={row.image}
+                  style={{ maxWidth: "8rem" }}
+                />
               </TableCell>
 
               <TableCell align="left" className={classes.tableRow}>
@@ -137,8 +131,8 @@ useEffect(() => {
 
               <TableCell align="right">
                 <ViewIcon />
-                <EditIcon />
-                <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id}/>
+                <EditProduct data={row} />
+                <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id} />
               </TableCell>
             </TableRow>
           ))}

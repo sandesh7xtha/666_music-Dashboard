@@ -1,7 +1,6 @@
 import React from "react";
 import Tooltip from "@material-ui/core/Tooltip";
 import Zoom from "@material-ui/core/Zoom";
-import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { AiOutlineEdit } from "react-icons/ai";
 
@@ -19,15 +18,15 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const EditIcon = () => {
+const EditIcon = (props) => {
   const classes = useStyle();
 
   return (
     <>
       <Tooltip title="Edit" TransitionComponent={Zoom} arrow>
-        <Link>
-          <AiOutlineEdit className={classes.editIcon} />
-        </Link>
+        <spam>
+          <AiOutlineEdit role="button" className={classes.editIcon} onClick={() => {props.onClick()}}/>
+        </spam>
       </Tooltip>
     </>
   );

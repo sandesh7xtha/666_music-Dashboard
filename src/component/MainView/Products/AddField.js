@@ -181,7 +181,7 @@ const AddFiled = () => {
                     <MenuItem value="">
                       <em>None</em>
                     </MenuItem>
-                    <MenuItem value="drum">Drum</MenuItem>
+                    <MenuItem value="Drum">Drum</MenuItem>
                     <MenuItem value="Guitar">Guitar</MenuItem>
                     <MenuItem value="Bass">Bass</MenuItem>
                     <MenuItem value="Keyboard">Keyboard</MenuItem>
