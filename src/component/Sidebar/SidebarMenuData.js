@@ -23,6 +23,6 @@ export const menuItems = [
     icon: <InventoryIcon fontSize="10px" />,
   },
   { name: "Secondhand", to: "/admin/secondhand", icon: <GiCycle /> },
-  { name: "About Us", to: "/admin/aboutus", icon: <IoIosPeople /> },
+  { name: "Order Detail", to: "/admin/OrderDetail", icon: <IoIosPeople /> },
   { name: "Contacts", to: "/admin/contacts", icon: <MdContactPhone /> },
 ];

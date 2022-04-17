@@ -16,7 +16,7 @@ import ViewIcon from "../../ViewComponent/ViewIcon";
 import EditIcon from "../../EditComponent/EditIcon";
 import DeleteIcon from "../../DeleteComponent/DeleteIcon";
 import Switch from "@mui/material/Switch";
-import EditProduct from "./EditProductDetail/EditProductPopUp";
+// import EditProduct from "./EditProductDetail/EditProductPopUp";
 import axios from "axios";
 
 const useStyle = makeStyles((theme) => ({
@@ -33,15 +33,17 @@ const useStyle = makeStyles((theme) => ({
 
 export default function DataTable() {
   const classes = useStyle();
-  const [shopProduct, setShopProduct] = useState([]);
-  const getShopProductFroMDB = () => {
+  const [orderDetail, setOrderDetail] = useState([]);
+  // console.log(shopProduct);
+
+  const getHistoryFroMDB = () => {
     axios
-      .get("http://localhost:4000/shopping/allShopingProduct")
+      .get("http://localhost:4000/payment/")
       .then((res) => {
         console.log(res.data.data);
-        setShopProduct(res.data.data);
+        setOrderDetail(res.data.data);
 
-        $("#shop").DataTable();
+        $("#orderDetail").DataTable();
       })
       .catch((err) => {
         console.log(err);
@@ -50,20 +52,20 @@ export default function DataTable() {
   };
 
   const deleteProduct = (shopProductID) => {
-    axios
-      .delete("http://localhost:4000/shopping/DeleteProduct/" + shopProductID)
-      .then((res) => {
-        console.log("deleted");
-        getShopProductFroMDB();
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("data insert fail");
-      });
+    // axios
+    //   .delete("http://localhost:4000/shopping/DeleteProduct/" + shopProductID)
+    //   .then((res) => {
+    //     console.log("deleted");
+    //     getShopProductFroMDB();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     console.log("data insert fail");
+    //   });
   };
 
   useEffect(() => {
-    getShopProductFroMDB();
+    getHistoryFroMDB();
   }, []);
 
   useEffect(() => {
@@ -73,27 +75,26 @@ export default function DataTable() {
   });
 
   const handleChange = (values1, values2) => {
-    const data = {
-      visibility: values1.target.checked.toString(),
-      sp_id: values2,
-    };
-
-    axios
-      .patch("http://localhost:4000/shopping/publish", data)
-      .then((res) => {
-        console.log(res);
-        // setShopProduct(res.data.data);`
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("data insert fail");
-      });
+    // const data = {
+    //   visibility: values1.target.checked.toString(),
+    //   sp_id: values2,
+    // };
+    // axios
+    //   .patch("http://localhost:4000/shopping/publish", data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     // setShopProduct(res.data.data);`
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     console.log("data insert fail");
+    //   });
   };
 
   return (
     <TableContainer>
       <Table
-        id="shop"
+        id="orderDetail"
         sx={{ minWidth: 300 }}
         style={{ paddingTop: "1rem", paddingBottom: "rem" }}
       >
@@ -103,7 +104,7 @@ export default function DataTable() {
               SN
             </TableCell>
             <TableCell className={classes.tableRow} align="left">
-              Product ID
+              Payment ID
             </TableCell>
             <TableCell className={classes.tableRow} align="left">
               Image
@@ -111,8 +112,11 @@ export default function DataTable() {
             <TableCell className={classes.tableRow} align="left">
               Title
             </TableCell>
+            <TableCell className={classes.tableRow} align="left">
+              Order Detail
+            </TableCell>
             <TableCell className={classes.tableRow} align="right">
-              Publish
+              Date
             </TableCell>
             <TableCell className={classes.tableRow} align="right">
               Action
@@ -120,7 +124,7 @@ export default function DataTable() {
           </TableRow>
         </TableHead>
         <TableBody stripedRows>
-          {shopProduct.map((row, index) => (
+          {orderDetail.map((row, index) => (
             <TableRow
               key={index}
               style={
@@ -136,7 +140,7 @@ export default function DataTable() {
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
                 {/* {index} */}
-                {row.sp_id}
+                {row.payment_id}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
                 <img
@@ -147,7 +151,17 @@ export default function DataTable() {
               </TableCell>
 
               <TableCell align="left" className={classes.tableRow}>
-                {row.title}
+                <p>Title : {row.title}</p>
+                <p>Product ID : {row.sp_id}</p>
+              </TableCell>
+              <TableCell align="left" className={classes.tableRow}>
+                <p>Customer Name : {row.fullName}</p>
+                <p>Address : {row.address}</p>
+                <p>City : {row.city}</p>
+                <p>Zip Code : {row.zip}</p>
+                <p>Province : {row.province}</p>
+                <p>Contact Number : {row.contactNumber}</p>
+                <p>Quantity : {row.quantity}</p>
               </TableCell>
               <TableCell align="right" className={classes.tableRow}>
                 {row.visibility === "true" ? (
@@ -166,10 +180,11 @@ export default function DataTable() {
                     }}
                   />
                 )}
+                <p> {row.date}</p>
               </TableCell>
               <TableCell align="right">
                 <ViewIcon />
-                <EditProduct data={row} />
+                {/* <EditProduct data={row} /> */}
                 <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id} />
               </TableCell>
             </TableRow>
