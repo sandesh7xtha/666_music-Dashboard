@@ -61,46 +61,48 @@ export const TableDiv = styled.div`
 //up to
 
 export const part = styled.div`
-display: flex;
-justify-content: space-between;
-margin-left: 3rem;
-margin-right: 3rem;
-margin-top: 1rem;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-top: 1rem;
+  align-items: center;
 
-.title{
-            width:30rem; 
-            margin-right: 3.7rem;
-        }
-
-.Description{
-    width:30rem; 
-    height:10rem;
-    border-color:blue;
-    z-index:-0;
+  .title {
+    width: 30rem;
     margin-right: 3.7rem;
-}
-.category{
-    margin-right: 19.9rem;
-    width:13.9rem; 
-}
-.Price{
-    margin-right: 19.9rem;
-}
-.stock{
-    margin-right: 19.9rem;
-}
-.contactNumber{
-    margin-right: 19.9rem;
-}
-.Email{
-    margin-right: 19.9rem;
-}
-.location{
-    margin-right: 19.9rem;
-}
-.addbutton{
+  }
 
+  .Description {
+    width: 30rem;
+    height: 10rem;
+    border-color: blue;
+    z-index: -0;
+    margin-right: 3.7rem;
+  }
+  .category {
+    margin-right: 19.9rem;
+    width: 13.9rem;
+  }
+  .Price {
+    margin-right: 19.9rem;
+  }
+  .stock {
+    margin-right: 19.9rem;
+  }
+  .discount {
+    margin-right: 19.9rem;
+  }
+  .contactNumber {
+    margin-right: 19.9rem;
+  }
+  .Email {
+    margin-right: 19.9rem;
+  }
+  .location {
+    margin-right: 19.9rem;
+  }
+  .addbutton {
     margin-left: 7.9rem;
-}
+  }
 `;

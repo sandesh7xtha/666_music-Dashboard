@@ -56,6 +56,7 @@ export default function DraggableDialog(props) {
       category: props.data.category,
       price: props.data.price,
       stock: props.data.stock,
+      discount: props.data.discount,
     },
     validationSchema: Yup.object({
       title: Yup.string().min(5, "Must be 5 characters").required("Required"),
@@ -96,7 +97,7 @@ export default function DraggableDialog(props) {
       category: values.category,
       price: values.price,
       stock: values.stock,
-      sp_id:props.data.sp_id,
+      sp_id: props.data.sp_id,
     };
 
     axios
@@ -120,7 +121,7 @@ export default function DraggableDialog(props) {
 
   return (
     <div>
-<EditIcon onClick={handleClickOpen}/>
+      <EditIcon onClick={handleClickOpen} />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -305,6 +306,27 @@ export default function DraggableDialog(props) {
                     size="small"
                     variant="outlined"
                     {...formik.getFieldProps("stock")}
+                  />
+                )}
+              </p.part>
+              <p.part>
+                <p>Discount</p>
+                {formik.touched.discount && formik.errors.discount ? (
+                  <TextField
+                    id="discount"
+                    className="discount"
+                    variant="outlined"
+                    error
+                    label={formik.errors.discount}
+                    {...formik.getFieldProps("discount")}
+                  />
+                ) : (
+                  <TextField
+                    id="discount"
+                    className="discount"
+                    label="discount"
+                    variant="outlined"
+                    {...formik.getFieldProps("discount")}
                   />
                 )}
               </p.part>

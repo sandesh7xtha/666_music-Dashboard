@@ -23,6 +23,7 @@ const AddFiled = () => {
       category: "",
       price: "",
       stock: "",
+      discount: "",
     },
     validationSchema: Yup.object({
       title: Yup.string().min(5, "Must be 5 characters").required("Required"),
@@ -35,6 +36,7 @@ const AddFiled = () => {
         .matches(/^[0-9\b]+$/, "number only")
         .required("Required"),
       stock: Yup.string().required("Required"),
+      discount: Yup.string(),
     }),
 
     onSubmit: (values) => {
@@ -58,6 +60,7 @@ const AddFiled = () => {
       formData.append("category", values.category);
       formData.append("price", values.price);
       formData.append("stock", values.stock);
+      formData.append("discount", values.discount);
 
       // formData.append("user_id",id)
       axios
@@ -199,7 +202,6 @@ const AddFiled = () => {
             <TextField
               id="price"
               className="Price"
-              label="(Rs) Price"
               variant="outlined"
               error
               label={formik.errors.price}
@@ -233,6 +235,27 @@ const AddFiled = () => {
               label="stock"
               variant="outlined"
               {...formik.getFieldProps("stock")}
+            />
+          )}
+        </p.part>
+        <p.part>
+          <p>Discount</p>
+          {formik.touched.discount && formik.errors.discount ? (
+            <TextField
+              id="discount"
+              className="discount"
+              variant="outlined"
+              error
+              label={formik.errors.discount}
+              {...formik.getFieldProps("discount")}
+            />
+          ) : (
+            <TextField
+              id="discount"
+              className="discount"
+              label="discount"
+              variant="outlined"
+              {...formik.getFieldProps("discount")}
             />
           )}
         </p.part>
