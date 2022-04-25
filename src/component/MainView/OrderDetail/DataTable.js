@@ -164,7 +164,7 @@ export default function DataTable() {
                 <p>Quantity : {row.quantity}</p>
               </TableCell>
               <TableCell align="right" className={classes.tableRow}>
-                {row.visibility === "true" ? (
+                {/* {row.visibility === "true" ? (
                   <Switch
                     size="small"
                     defaultChecked
@@ -179,13 +179,13 @@ export default function DataTable() {
                       handleChange(e, row.sp_id);
                     }}
                   />
-                )}
+                )} */}
                 <p> {row.date}</p>
               </TableCell>
               <TableCell align="right">
-                <ViewIcon />
+                {/* <ViewIcon /> */}
                 {/* <EditProduct data={row} /> */}
-                <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id} />
+                {/* <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id} /> */}
               </TableCell>
             </TableRow>
           ))}

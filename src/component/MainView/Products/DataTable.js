@@ -168,7 +168,7 @@ export default function DataTable() {
                 )}
               </TableCell>
               <TableCell align="right">
-                <ViewIcon />
+                {/* <ViewIcon /> */}
                 <EditProduct data={row} />
                 <DeleteIcon deleteProduct={deleteProduct} id={row.sp_id} />
               </TableCell>

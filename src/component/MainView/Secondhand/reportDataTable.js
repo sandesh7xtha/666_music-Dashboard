@@ -17,7 +17,6 @@ import EditIcon from "../../EditComponent/EditIcon";
 import DeleteIcon from "../../DeleteComponent/DeleteIcon";
 import axios from "axios";
 
-
 const useStyle = makeStyles((theme) => ({
   tableRow: {
     whiteSpace: "nowrap",
@@ -53,9 +52,7 @@ export default function ReportDataTable() {
 
   const deleteReport = (secondhandID) => {
     axios
-      .delete(
-        "http://localhost:4000/report/DeleteReport/" + secondhandID
-      )
+      .delete("http://localhost:4000/report/DeleteReport/" + secondhandID)
       .then((res) => {
         console.log("deleted");
         getReportFroMDB();
@@ -77,8 +74,6 @@ export default function ReportDataTable() {
   });
 
   return (
-    
-
     <TableContainer>
       <Table
         id="report"
@@ -114,7 +109,6 @@ export default function ReportDataTable() {
                   ? { backgroundColor: "#e0e0d1" }
                   : { backgroundColor: "white" }
               }
-
             >
               <TableCell align="left" className={classes.tableRow}>
                 {index + 1}
@@ -131,8 +125,8 @@ export default function ReportDataTable() {
               </TableCell>
 
               <TableCell align="right">
-                <ViewIcon />
-                <EditIcon />
+                {/* <ViewIcon />
+                <EditIcon /> */}
                 <DeleteIcon deleteProduct={deleteReport} id={row.shp_id} />
               </TableCell>
             </TableRow>

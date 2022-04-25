@@ -17,8 +17,6 @@ import EditIcon from "../../EditComponent/EditIcon";
 import DeleteIcon from "../../DeleteComponent/DeleteIcon";
 import axios from "axios";
 
-
-
 const useStyle = makeStyles((theme) => ({
   tableRow: {
     whiteSpace: "nowrap",
@@ -35,53 +33,47 @@ export default function DataTable() {
   const classes = useStyle();
   const [secondhandProduct, setsecondhandProduct] = useState([]);
 
-  const getsecondhandProductFroMDB = ()=>{
+  const getsecondhandProductFroMDB = () => {
     axios
-    .get("http://localhost:4000/secondProduct/")
-    .then((res) => {
-      console.log(res.data.data);
-      setsecondhandProduct(res.data.data);
-      // $(document).ready(function () {
-      //   $("#example3").DataTable();
-      // });
-      $("#secondhand").DataTable();
-     
-    })
-    .catch((err) => {
-      console.log(err);
-      console.log("data insert fail");
-      
-    });
+      .get("http://localhost:4000/secondProduct/")
+      .then((res) => {
+        console.log(res.data.data);
+        setsecondhandProduct(res.data.data);
+        // $(document).ready(function () {
+        //   $("#example3").DataTable();
+        // });
+        $("#secondhand").DataTable();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
-}
-
-const deleteProduct =(secondhandID) =>{
-  axios
-  .delete("http://localhost:4000/secondProduct/DeleteProduct/"+secondhandID)
-  .then((res) => {
-    console.log("deleted");
-    getsecondhandProductFroMDB();
-
-   
-  })
-  .catch((err) => {
-    console.log(err);
-    console.log("data insert fail");
-    
-  });  
- 
-}
+  const deleteProduct = (secondhandID) => {
+    axios
+      .delete(
+        "http://localhost:4000/secondProduct/DeleteProduct/" + secondhandID
+      )
+      .then((res) => {
+        console.log("deleted");
+        getsecondhandProductFroMDB();
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("data insert fail");
+      });
+  };
 
   useEffect(() => {
-    getsecondhandProductFroMDB();   
+    getsecondhandProductFroMDB();
   }, []);
 
-useEffect(() => {
-  $(document).ready(function () {
-    // $("#example3").DataTable();
+  useEffect(() => {
+    $(document).ready(function () {
+      // $("#example3").DataTable();
+    });
   });
-});
-
 
   return (
     <TableContainer>
@@ -92,7 +84,7 @@ useEffect(() => {
       >
         <TableHead>
           <TableRow>
-          <TableCell className={classes.tableRow} align="left">
+            <TableCell className={classes.tableRow} align="left">
               SN
             </TableCell>
             <TableCell className={classes.tableRow} align="left">
@@ -100,7 +92,7 @@ useEffect(() => {
             </TableCell>
             <TableCell className={classes.tableRow} align="left">
               Image
-            </TableCell>            
+            </TableCell>
             <TableCell className={classes.tableRow} align="left">
               Title
             </TableCell>
@@ -123,13 +115,17 @@ useEffect(() => {
               //   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="left" className={classes.tableRow}>
-                {index+1}
+                {index + 1}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
                 {row.shp_id}
               </TableCell>
               <TableCell align="left" className={classes.tableRow}>
-              <img className="img" src={row.image} style={{  maxWidth: "8rem" ,}}/>
+                <img
+                  className="img"
+                  src={row.image}
+                  style={{ maxWidth: "8rem" }}
+                />
               </TableCell>
 
               <TableCell align="left" className={classes.tableRow}>
@@ -137,8 +133,8 @@ useEffect(() => {
               </TableCell>
 
               <TableCell align="right">
-                <ViewIcon />
-                <EditIcon />
+                {/* <ViewIcon /> */}
+                {/* <EditIcon /> */}
                 <DeleteIcon deleteProduct={deleteProduct} id={row.shp_id} />
               </TableCell>
             </TableRow>

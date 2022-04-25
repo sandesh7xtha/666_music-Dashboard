@@ -131,7 +131,7 @@ export default function NewsDataTable() {
               </TableCell>
 
               <TableCell align="right">
-                <ViewIcon />
+                {/* <ViewIcon /> */}
                 <EditProduct data={row} />
                 <DeleteIcon deleteProduct={deleteProduct} id={row.new_id} />
               </TableCell>
